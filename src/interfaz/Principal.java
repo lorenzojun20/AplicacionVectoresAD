@@ -11,13 +11,13 @@ import javax.swing.JOptionPane;
  *
  * @author lyanet1
  */
-
 public class Principal extends javax.swing.JFrame {
 
     /**
      * Creates new form Principal
      */
     double v[];
+
     public Principal() {
         initComponents();
         cmdCrear.setEnabled(true);
@@ -25,7 +25,7 @@ public class Principal extends javax.swing.JFrame {
         cmdAutomatico.setEnabled(false);
         cmdMostrar.setEnabled(false);
         cmdBorrar.setEnabled(true);
-        
+
     }
 
     /**
@@ -154,39 +154,49 @@ public class Principal extends javax.swing.JFrame {
         if (txtLongitud.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Digite la Longitud", "ERROR", JOptionPane.ERROR_MESSAGE);
             txtLongitud.requestFocusInWindow();
-        } else if (Integer.parseInt(txtLongitud.getText())==0) {
+        } else if (Integer.parseInt(txtLongitud.getText()) == 0) {
             JOptionPane.showMessageDialog(this, "La Longitud no puede llevar cero", "ERROR", JOptionPane.ERROR_MESSAGE);
             txtLongitud.requestFocusInWindow();
             txtLongitud.selectAll();
-        }
-        else{
+        } else {
             longitud = Integer.parseInt(txtLongitud.getText());
-            v= new double [longitud];
+            v = new double[longitud];
             JOptionPane.showMessageDialog(this, "El Vector se ha creado exitosamente!");
-        txtLongitud.setEditable(false); 
-        cmdCrear.setEnabled(false);
-        cmdLlenarManual.setEnabled(true);
-        cmdAutomatico.setEnabled(true);
-        cmdMostrar.setEnabled(false);
-        cmdBorrar.setEnabled(true);
-            
+            txtLongitud.setEditable(false);
+            cmdCrear.setEnabled(false);
+            cmdLlenarManual.setEnabled(true);
+            cmdAutomatico.setEnabled(true);
+            cmdMostrar.setEnabled(false);
+            cmdBorrar.setEnabled(true);
+
         }
-        
+
     }//GEN-LAST:event_cmdCrearActionPerformed
 
     private void txtLongitudKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtLongitudKeyTyped
-char c=evt.getKeyChar();
-if(!Character.isDigit(c)){
-    getToolkit().beep();
-    evt.consume();
-}
+        char c = evt.getKeyChar();
+        if (!Character.isDigit(c)) {
+            getToolkit().beep();
+            evt.consume();
+        }
     }//GEN-LAST:event_txtLongitudKeyTyped
 
     private void cmdLlenarManualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdLlenarManualActionPerformed
+        int sw;
         double n;
-        for(int i= 0; i < v.length; i++){
-            n=Double.parseDouble(JOptionPane.showInputDialog(this, "Digite el elmento en la posición "+i));
-            v[i]=n;
+        for (int i = 0; i < v.length; i++) {
+            do {
+                sw = 1;
+                try {
+                    n = Double.parseDouble(JOptionPane.showInputDialog(this, "Digite el elmento en la posición " + i));
+                    v[i] = n;
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(this, "Digite un Número Válido", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    sw = 0;
+                } catch (NullPointerException e) {
+                    JOptionPane.showMessageDialog(this, "No Puedes Salir", "ERROR", JOptionPane.ERROR_MESSAGE);
+                }
+            } while (sw == 0);
         }
         cmdCrear.setEnabled(false);
         cmdLlenarManual.setEnabled(false);
@@ -197,22 +207,23 @@ if(!Character.isDigit(c)){
 
     private void cmdMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdMostrarActionPerformed
         for (int i = 0; i < v.length; i++) {
-            txtResultado.append(v[i]+"\n");
-      
+            txtResultado.append(v[i] + "\n");
+
         }
         cmdCrear.setEnabled(false);
         cmdLlenarManual.setEnabled(false);
         cmdAutomatico.setEnabled(false);
         cmdMostrar.setEnabled(false);
         cmdBorrar.setEnabled(true);
-        
+
     }//GEN-LAST:event_cmdMostrarActionPerformed
 
     private void cmdBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdBorrarActionPerformed
         txtLongitud.setText("");
         txtResultado.setText("");
-        
+
         v = null;
+        txtLongitud.requestFocusInWindow();
         cmdCrear.setEnabled(true);
         cmdLlenarManual.setEnabled(false);
         cmdAutomatico.setEnabled(false);
@@ -222,10 +233,10 @@ if(!Character.isDigit(c)){
     }//GEN-LAST:event_cmdBorrarActionPerformed
 
     private void cmdAutomaticoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdAutomaticoActionPerformed
-       int n;
+        int n;
         for (int i = 0; i < v.length; i++) {
-            n =(int)(Math.random()*50 + 1);
-            v[i]=n;
+            n = (int) (Math.random() * 50 + 1);
+            v[i] = n;
         }
         JOptionPane.showMessageDialog(this, "Vector Llenado Correctamente");
         cmdCrear.setEnabled(false);
